@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "covidreport-adf987"
+		},
+		"LS_AzureBlobStorage_COVID_connectionString": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_COVID_accountKey": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_COVID_properties_typeProperties_url": {
+			"value": "https://covidreportdatalake2.dfs.core.windows.net/"
+		},
+		"ls_http_opendata_eddc_eu_properties_typeProperties_url": {
+			"value": "@{linkedService().sourceBaseURL}"
+		},
+		"tr_population_properties_typeProperties_scope": {
+			"value": "/subscriptions/c440d628-c15e-475c-87aa-e1a4e9f9cf7d/resourceGroups/rg_covid_reporting/providers/Microsoft.Storage/storageAccounts/covidreportstorageaccnt"
+		}
+	}
+}

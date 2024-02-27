@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "covidreport-adf987"
+		},
+		"LS_AzureBlobStorage_COVID_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureBlobStorage_COVID'"
+		},
+		"LS_AzureDataLakeStorage_COVID_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage_COVID'"
+		},
+		"LS_AzureDataLakeStorage_COVID_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://covidreportdatalake2.dfs.core.windows.net/"
+		},
+		"ls_http_opendata_eddc_eu_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().sourceBaseURL}"
+		},
+		"tr_population_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/c440d628-c15e-475c-87aa-e1a4e9f9cf7d/resourceGroups/rg_covid_reporting/providers/Microsoft.Storage/storageAccounts/covidreportstorageaccnt"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "covidreport-adf987_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_AzureBlobStorage_COVID_connectionString": {
+						"value": "[parameters('LS_AzureBlobStorage_COVID_connectionString')]"
+					},
+					"LS_AzureDataLakeStorage_COVID_accountKey": {
+						"value": "[parameters('LS_AzureDataLakeStorage_COVID_accountKey')]"
+					},
+					"LS_AzureDataLakeStorage_COVID_properties_typeProperties_url": {
+						"value": "[parameters('LS_AzureDataLakeStorage_COVID_properties_typeProperties_url')]"
+					},
+					"ls_http_opendata_eddc_eu_properties_typeProperties_url": {
+						"value": "[parameters('ls_http_opendata_eddc_eu_properties_typeProperties_url')]"
+					},
+					"tr_population_properties_typeProperties_scope": {
+						"value": "[parameters('tr_population_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
